@@ -1,0 +1,196 @@
+﻿<Window x:Class="DrawingProgram.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DrawingProgram"
+        mc:Ignorable="d"
+        Title="Drawing program" Height="599" Width="1088" Loaded="Window_Loaded" IsTabStop="False">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="19"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Background="#FEFEFE">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="70"/>
+                <ColumnDefinition Width="70"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+
+            <ComboBox x:Name="cbbFile" Grid.Row="0" Grid.Column="0" SelectedIndex="0" Height="19" HorizontalAlignment="Left" VerticalAlignment="Top" Width="70" Padding="5, 0, 0, 0" SelectionChanged="CbbFile_SelectionChanged" TabIndex="1">
+                <ComboBoxItem Content="File" Padding="0" Visibility="Collapsed"/>
+                <ComboBoxItem Content="New" Padding="5, 0, 0, 0"/>
+                <ComboBoxItem Content="Open" Padding="5, 0, 0, 0"/>
+                <ComboBoxItem Content="Save" Padding="5, 0, 0, 0"/>
+                <ComboBoxItem Content="Debug" Padding="5, 0, 0, 0"/>
+            </ComboBox>
+
+            <ComboBox x:Name="cbbEdit" Grid.Row="0" Grid.Column="1" SelectedIndex="0" Height="19" HorizontalAlignment="Left" VerticalAlignment="Top" Width="70" Padding="5, 0, 0, 0" TabIndex="2" SelectionChanged="CbbEdit_SelectionChanged">
+                <ComboBoxItem Content="Edit" Padding="0" Visibility="Collapsed"/>
+                <ComboBoxItem Content="Undo" Padding="5, 0, 0, 0"/>
+                <ComboBoxItem Content="Redo" Padding="5, 0, 0, 0"/>
+            </ComboBox>
+        </Grid>
+
+        <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" CanContentScroll="False" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Hidden">
+            <Grid Background="#BBF">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="5"/>
+                    <RowDefinition Height="38"/>
+                    <RowDefinition Height="38"/>
+                    <RowDefinition Height="38"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Button x:Name="btnToolsSelect" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0 0 2 2" Width="35" Height="35" ToolTip="Select&#013;Lasso-Select strokes to move/scale/delete them" Click="BtnToolsSelect_Click" TabIndex="3">
+                    <Image Source="pack://siteoforigin:,,,/Images/Select.png" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+                </Button>
+
+                <Button x:Name="btnToolsBrush" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="2 0 0 2" Width="35" Height="35" ToolTip="Brush&#013;To draw strokes" Click="BtnToolsBrush_Click" TabIndex="4">
+                    <Image Source="pack://siteoforigin:,,,/Images/ToolBrush.png" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+                </Button>
+
+                <Button x:Name="btnToolsEraserStrokeParts" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0 0 2 2" Width="35" Height="35" ToolTip="Eraser&#013;To delete stroke parts" Click="BtnToolsEraserStrokeParts_Click" TabIndex="5">
+                    <Image Source="pack://siteoforigin:,,,/Images/Eraser.png" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+                </Button>
+
+                <Button x:Name="btnToolsEraserStrokes" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="2 0 0 2" Width="35" Height="35" ToolTip="Eraser (full strokes)&#013;To fully delete strokes" Click="BtnToolsEraserStrokes_Click" TabIndex="6">
+                    <Image Source="pack://siteoforigin:,,,/Images/Eraser.png" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+                </Button>
+
+                <Button x:Name="btnToolsFill" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0 0 2 2" Width="35" Height="35" ToolTip="Fill&#013;To change the color of a stroke" Click="BtnToolsFill_Click" TabIndex="6">
+                    <Image Source="pack://siteoforigin:,,,/Images/Fill.png" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+                </Button>
+            </Grid>
+        </ScrollViewer>
+
+        <ScrollViewer Grid.Row="1" Grid.Column="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden">
+            <Grid Background="#DDF">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="244*"/>
+                </Grid.ColumnDefinitions>
+                <GroupBox Header="Options" Height="60" Margin="0,20,719,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="186" Foreground="Black" BorderBrush="#FEFEFE" BorderThickness="1" Grid.Column="1">
+                    <Grid HorizontalAlignment="Right" Width="174">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="5*"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+
+
+                        <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" BorderBrush="#FEFEFE" BorderThickness="1"/>
+                        <Label Grid.Row="0" Grid.Column="0" Padding="0" Margin="5,0,0,0" Content="Pencil smoothing"/>
+                        <CheckBox x:Name="cbxPencilSmoothing" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Click="CbxPencilSmoothing_Click" TabIndex="7"/>
+
+                        <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" BorderBrush="#FEFEFE" BorderThickness="1"/>
+                        <Label Grid.Row="1" Grid.Column="0" Padding="0" Margin="5,0,0,0" Content="Cursive"/>
+                        <CheckBox x:Name="cbxCursive" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Click="CbxCursive_Click" TabIndex="8"/>
+                    </Grid>
+                </GroupBox>
+
+                <GroupBox Header="Canvas size" Height="60" Margin="0,20,448,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="266" Foreground="Black" BorderBrush="#FEFEFE" BorderThickness="1" Grid.Column="1">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Grid.Row="0" Grid.Column="0" Padding="0" Content="Width"/>
+                        <Label Grid.Row="2" Grid.Column="0" Padding="0" Content="Height"/>
+                        <Slider x:Name="sldCanvasWidth" TickFrequency="1" IsSnapToTickEnabled="True" Grid.Row="0" Grid.Column="1" Minimum="1" Maximum="1920" ValueChanged="SldCanvasWidthValueChanged" SmallChange="1" MouseEnter="SldCanvasWidth_MouseEnter" TabIndex="9"/>
+                        <Slider x:Name="sldCanvasHeight" TickFrequency="1" IsSnapToTickEnabled="True" Grid.Row="1" Grid.Column="1" Minimum="1" Maximum="1080" ValueChanged="SldCanvasHeightValueChanged" SmallChange="1" MouseEnter="SldCanvasHeight_MouseEnter" TabIndex="10"/>
+                        <Label x:Name="lblCanvasWidth" Grid.Row="0" Grid.Column="2" Padding="0" HorizontalAlignment="Right"/>
+                        <Label x:Name="lblCanvasHeight" Grid.Row="1" Grid.Column="2" Padding="0" HorizontalAlignment="Right"/>
+                    </Grid>
+                </GroupBox>
+
+                <GroupBox Header="Pencil size" Height="60" Margin="0,20,171,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="272" Foreground="Black" BorderBrush="#FEFEFE" BorderThickness="1" Grid.Column="1">
+                    <Grid HorizontalAlignment="Left" Height="40" Margin="0,-2,0,-1" VerticalAlignment="Top" Width="40">
+                        <Ellipse x:Name="pencilPreview" Height="2" Width="2" HorizontalAlignment="Center" VerticalAlignment="Center" Fill="Black"/>
+                        <Slider x:Name="sldPencilSize" Margin="0,11,-211,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="196" Value="2" Minimum="1" Maximum="30" ValueChanged="SldPencilSize_ValueChanged" TabIndex="11"/>
+                    </Grid>
+                </GroupBox>
+
+                <GroupBox Header="Colors" Height="60" Margin="0,20,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="156" Foreground="Black" BorderBrush="#FEFEFE" BorderThickness="1" Grid.Column="1">
+                    <Grid>
+                        <Button x:Name="btnColorBlack" Margin="0,4,109,0" Width="30px" Height="30px" HorizontalAlignment="Right" Background="#000" Click="BtnColorBlack_Click" VerticalAlignment="Top" TabIndex="12"/>
+                        <Button x:Name="btnColorWhite" Margin="0,4,74,0" Width="30px" Height="30px" HorizontalAlignment="Right" Background="#FEFEFE" Click="BtnColorWhite_Click" VerticalAlignment="Top" TabIndex="13"/>
+                        <Button x:Name="btnColorCustomColor" Margin="0,4,39,0" Width="30px" Height="30px" HorizontalAlignment="Right" Background="#FEFEFE" Click="BtnColorCustomColor_Click" VerticalAlignment="Top" Content="Edit" TabIndex="14"/>
+                        <Button x:Name="btnColorCustomBGColor" Margin="0,4,4,0" Width="30px" Height="30px" HorizontalAlignment="Right" Background="#FEFEFE" Click="BtnColorCustomBGColor_Click" VerticalAlignment="Top" Content="BG" TabIndex="15"/>
+                    </Grid>
+                </GroupBox>
+            </Grid>
+        </ScrollViewer>
+
+        <ScrollViewer Grid.Row="2" Grid.Column="1" CanContentScroll="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+            <Grid x:Name="resizeField" Background="#445" MouseMove="ResizeField_MouseMove">
+                <Grid x:Name="debugMenu" Visibility="Hidden" Panel.ZIndex="2"  Width="Auto" Height="Auto" HorizontalAlignment="Right" VerticalAlignment="Top" Background="#99010101">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" BorderThickness="0 0 0 1" BorderBrush="Red" Content="Debug menu" Foreground="#FEFEFE"/>
+
+                    <Label Grid.Row="1" Grid.Column="0" Content="Strokes amount:" Foreground="#FEFEFE"/>
+                    <Label Grid.Row="1" Grid.Column="1" Content="0" Foreground="#FEFEFE" x:Name="debugStrokesAmount"/>
+
+                    <Label Grid.Row="2" Grid.Column="0" Content="StylusPoints amount:" Foreground="#FEFEFE"/>
+                    <Label Grid.Row="2" Grid.Column="1" Content="0" Foreground="#FEFEFE" x:Name="debugStylusPointsAmount"/>
+
+                    <Label Grid.Row="3" Grid.Column="0" Content="Historysize:" Foreground="#FEFEFE"/>
+                    <Label Grid.Row="3" Grid.Column="1" Content="0" Foreground="#FEFEFE" x:Name="debugHistorySize"/>
+
+                    <Label Grid.Row="4" Grid.Column="0" Content="Current historynode:" Foreground="#FEFEFE"/>
+                    <Label Grid.Row="4" Grid.Column="1" Content="0" Foreground="#FEFEFE" x:Name="debugCurrentHistoryNode"/>
+
+                    <Label Grid.Row="5" Grid.Column="0" Content="Historynodes Deleted:" Foreground="#FEFEFE"/>
+                    <Label Grid.Row="5" Grid.Column="1" Content="0" Foreground="#FEFEFE" x:Name="debugHistoryNodesDeleted"/>
+                </Grid>
+
+                <Border BorderThickness="10, 10, 0, 0">
+                    <Grid>
+                        <InkCanvas x:Name="inkCanvas" Width="500" Height="300" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                            <InkCanvas.Background>
+                                <SolidColorBrush Color="#FEFEFE"/>
+                            </InkCanvas.Background>
+                        </InkCanvas>
+
+                        <Rectangle x:Name="resizeHook" Width="10" Height="10" Fill="#FEFEFE" Stroke="Red" StrokeThickness="2" Margin="500,300,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" MouseDown="ResizeHook_MouseDown" MouseUp="ResizeHook_MouseUp"/>
+                    </Grid>
+                </Border>
+            </Grid>
+        </ScrollViewer>
+    </Grid>
+</Window>
