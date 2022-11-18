@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DrawingProgram"
         mc:Ignorable="d"
-        Title="Drawing program" Height="599" Width="1088" Loaded="Window_Loaded" IsTabStop="False">
+        Title="Drawing program" Height="599" Width="1088" Loaded="Window_Loaded" IsTabStop="False" Icon="ToolBrush.png">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="19"/>
