@@ -5,4 +5,4 @@ A drawing program made in C#
 
 In this drawing program your brushstrokes can be easily scalable, removed, colored, saved and loaded without any loss of quality or strange pixel interpolation.
 
-This project was aimed to further discover C#
+This was a personal project, aimed to further discover C# as this was a commonly used programming language in my study.
